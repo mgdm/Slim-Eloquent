@@ -34,32 +34,29 @@ $app->container->singleton('authors', function($app) {
     return new Authors();
 });
 
+$app->response->header('Content-Type', 'application/json');
+
 $app->get('/books/', function() use ($app) {
     $books = $app->books->with('authors')->get();
-    $app->response->header('Content-Type', 'application/json');
     $app->response->setBody($books->toJson());
 });
 
 $app->get('/books/:id', function($id) use ($app) {
     $book = $app->books->findOrFail($id);
-    $app->response->header('Content-Type', 'application/json');
     $app->response->setBody($book->toJson());
 });
 
 $app->get('/authors/', function() use ($app) {
     $authors = $app->authors->with('books')->get();
-    $app->response->header('Content-Type', 'application/json');
     $app->response->setBody($authors->toJson());
 });
 
 $app->get('/authors/:id', function($id) use ($app) {
     $author = $app->authors->findOrFail($id);
-    $app->response->header('Content-Type', 'application/json');
     $app->response->setBody($author->toJson());
 });
 
 $app->error(function(\Exception $e) use ($app) {
-    $app->response->header('Content-Type', 'application/json');
     $app->response->setBody(json_encode([
         'status' => false,
         'message' => $e->getMessage(),
