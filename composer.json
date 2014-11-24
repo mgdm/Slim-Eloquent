@@ -1,0 +1,9 @@
+{
+    "require": {
+        "slim/slim": "~2.4",
+        "illuminate/database": "~4.2"
+    },
+    "autoload": {
+        "psr-0": {"Test": "src/"}
+    }
+}
